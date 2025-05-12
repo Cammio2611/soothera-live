@@ -1,0 +1,4 @@
+1. Upload files to GitHub
+2. Enable GitHub Pages
+3. Enable GitHub Actions
+4. Run scripts to automate content.

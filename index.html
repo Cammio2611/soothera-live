@@ -45,14 +45,18 @@
       margin-top: 15px;
     }
     nav a {
-      color: #fff;
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
+     background: white;
+     color: var(--primary);
+     padding: 8px 14px;
+     margin: 0 6px;
+     border-radius: 20px;
+     font-weight: bold;
+     text-decoration: none;
+     transition: all 0.3s ease;
     }
     nav a:hover {
-      color: #aad8ff;
+      background: var(--accent);
+      color: white;
     }
     section {
       max-width: 960px;
@@ -106,9 +110,9 @@
 </head>
 <body>
   <header>
-    <img src="soothera-logo.svg" alt="Soothera Logo" />
-    <h1>Discover Soothera</h1>
-    <p>Natural Migraine Relief Backed by Comfort and Care</p>
+    <img src="./soothera-logo.svg" alt="Soothera Logo" style="height: 60px;" />
+    <h1>Discover Real Migraine Relief with Soothera</h1>
+    <p>Shop science-backed products, expert guides, and natural solutions for a clearer, pain-free day.</p>
     <nav>
       <a href="#products">Products</a>
       <a href="#blog">Blog</a>
@@ -117,10 +121,9 @@
   </header>
 
   <section id="products">
-    <h2>🧊 Featured Product</h2>
-    <p><strong>Soothera Migraine Relief Ice Cap</strong><br>
-    Designed for real-world relief with cooling compression, perfect for migraine sufferers.</p>
-    <a href="https://www.amazon.co.uk/dp/B09Q5BHQ38?tag=soothera-21" target="_blank" class="button">Shop Now on Amazon</a>
+    <h2>🔥 Best Seller: Soothera Migraine Ice Cap</h2>
+    <p>🧊 Trusted by thousands for instant migraine relief — soft, stretchable, and reusable for maximum comfort.</p>
+    <a href="https://www.amazon.co.uk/dp/B09Q5BHQ38?tag=soothera-21" target="_blank" class="button">Shop on Amazon Now</a>
   </section>
 
   <section id="blog">
@@ -133,12 +136,13 @@
   </section>
 
   <section id="newsletter">
-    <h2>📬 Join Our Wellness Newsletter</h2>
-    <p>Get exclusive migraine relief tips and special offers.</p>
+    <h2>📬 Stay Ahead of Migraine Pain</h2>
+    <p>Get exclusive tips, product updates, and expert advice delivered straight to your inbox.</p>
     <form action="https://your-email-signup-link-here" method="POST">
-      <input type="email" name="email" placeholder="Enter your email" required />
-      <button type="submit">Subscribe</button>
-    </form>
+    <input type="email" name="email" placeholder="Enter your email to subscribe" required>
+    <button type="submit">Get Tips & Offers</button>
+  </form>
+
   </section>
 
   <footer>

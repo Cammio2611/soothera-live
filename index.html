@@ -1,69 +1,148 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Soothera - Natural Migraine Relief</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #f8f9fa; color: #333; margin: 0; padding: 0; }
-    header { background-color: #0073e6; color: white; padding: 40px 20px; text-align: center; }
-    header img { height: 60px; margin-bottom: 10px; }
-    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    .container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); margin-top: -30px; position: relative; z-index: 1; }
-    h2 { border-bottom: 2px solid #0073e6; padding-bottom: 5px; }
-    a.button { display: inline-block; background-color: #0073e6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; transition: background-color 0.3s; }
-    a.button:hover { background-color: #005bb5; }
-    footer { text-align: center; padding: 20px; font-size: 0.9em; color: #777; }
-    form input[type="email"] { padding: 8px; width: 70%; border: 1px solid #ccc; border-radius: 4px; }
-    form button { padding: 8px 16px; border: none; background-color: #0073e6; color: white; border-radius: 4px; cursor: pointer; }
-    form button:hover { background-color: #005bb5; }
+    :root {
+      --primary: #0073e6;
+      --secondary: #f4f9fd;
+      --text-dark: #222;
+      --text-light: #fff;
+      --accent: #1b9aaa;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--secondary);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--primary);
+      color: var(--text-light);
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    header img {
+      height: 80px;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.2rem;
+    }
+    nav {
+      margin-top: 15px;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #aad8ff;
+    }
+    section {
+      max-width: 960px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    section h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    a.button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    a.button:hover {
+      background-color: #005bb5;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #777;
+    }
+    form input[type="email"] {
+      padding: 10px;
+      width: 60%;
+      max-width: 300px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    form button {
+      padding: 10px 16px;
+      border: none;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background-color: #005bb5;
+    }
   </style>
 </head>
 <body>
-
   <header>
-    <img src="soothera-logo.svg" alt="Soothera Logo">
-    <h1>Welcome to Soothera</h1>
-    <p>Your Trusted Source for Natural Migraine Relief</p>
+    <img src="soothera-logo.svg" alt="Soothera Logo" />
+    <h1>Discover Soothera</h1>
+    <p>Natural Migraine Relief Backed by Comfort and Care</p>
     <nav>
       <a href="#products">Products</a>
       <a href="#blog">Blog</a>
-      <a href="#contact">Contact</a>
+      <a href="#newsletter">Newsletter</a>
     </nav>
   </header>
 
-  <div class="container">
+  <section id="products">
+    <h2>🧊 Featured Product</h2>
+    <p><strong>Soothera Migraine Relief Ice Cap</strong><br>
+    Designed for real-world relief with cooling compression, perfect for migraine sufferers.</p>
+    <a href="https://www.amazon.co.uk/dp/B09Q5BHQ38?tag=soothera-21" target="_blank" class="button">Shop Now on Amazon</a>
+  </section>
 
-    <section id="products">
-      <h2>Featured Product</h2>
-      <p>🧊 <strong>Soothera Migraine Relief Ice Cap</strong></p>
-      <p>Instant cooling relief for migraine sufferers. Comfortable, reusable, and effective.</p>
-      <a href="https://www.amazon.co.uk/dp/B09Q5BHQ38?tag=soothera-21" target="_blank" class="button">Buy on Amazon</a>
-    </section>
+  <section id="blog">
+    <h2>📝 Latest Wellness Guides</h2>
+    <ul>
+      <li><a href="#">Top 5 Natural Remedies That Actually Work</a></li>
+      <li><a href="#">Ultimate Migraine Ice Cap Buyer's Guide 2025</a></li>
+      <li><a href="#">How to Use Peppermint Oil for Headache Relief</a></li>
+    </ul>
+  </section>
 
-    <section id="blog">
-      <h2>Latest Blog Posts</h2>
-      <ul>
-        <li><a href="blog-post-2025-05-10.md">Natural Migraine Remedies 2025</a></li>
-        <li><a href="#">Best Migraine Ice Caps Reviewed</a></li>
-        <li><a href="#">How Essential Oils Can Help You</a></li>
-      </ul>
-    </section>
-
-    <section id="contact">
-      <h2>Join Our Wellness Newsletter</h2>
-      <p>Get the latest migraine relief tips and special offers.</p>
-      <form action="https://your-email-signup-link-here" method="POST">
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <button type="submit">Subscribe</button>
-      </form>
-    </section>
-
-  </div>
+  <section id="newsletter">
+    <h2>📬 Join Our Wellness Newsletter</h2>
+    <p>Get exclusive migraine relief tips and special offers.</p>
+    <form action="https://your-email-signup-link-here" method="POST">
+      <input type="email" name="email" placeholder="Enter your email" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
 
   <footer>
     <p>&copy; 2025 Soothera Wellness</p>
   </footer>
-
 </body>
 </html>

@@ -1,0 +1,4 @@
+openai
+praw
+tweepy
+python-dotenv

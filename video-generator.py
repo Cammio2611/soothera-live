@@ -2,10 +2,15 @@ import os
 import datetime
 import subprocess
 
-# Directories
+# Directories and assets
 scripts_dir = "scripts"
 videos_dir = "videos"
+assets_dir = "assets"
+
 os.makedirs(videos_dir, exist_ok=True)
+
+background_image = os.path.join(assets_dir, "background.jpg")
+background_music = os.path.join(assets_dir, "soothera-background-music.mp3")
 
 # Get latest script
 script_files = sorted(
@@ -32,17 +37,16 @@ with open(overlay_text_file, "w", encoding="utf-8") as file:
 today = datetime.date.today().strftime("%Y-%m-%d")
 video_filename = os.path.join(videos_dir, f"shorts-{today}.mp4")
 
-# FFmpeg Command Example (Static Image with Text Overlay)
-# Make sure 'background.jpg' exists in your project folder
+# FFmpeg Command with background image and music
 cmd = [
     "ffmpeg",
     "-loop", "1",
-    "-i", "background.jpg",
-    "-f", "lavfi",
-    "-i", "anullsrc",
+    "-i", background_image,
+    "-i", background_music,
     "-t", "60",
     "-vf", f"drawtext=textfile={overlay_text_file}:fontcolor=white:fontsize=24:x=(w-text_w)/2:y=(h-text_h)/2",
     "-c:v", "libx264",
+    "-c:a", "aac",
     "-pix_fmt", "yuv420p",
     "-shortest",
     video_filename

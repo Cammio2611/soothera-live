@@ -10,7 +10,7 @@ assets_dir = "assets"
 os.makedirs(videos_dir, exist_ok=True)
 
 background_image = os.path.join(assets_dir, "background.jpg")
-background_music = os.path.join(assets_dir, "soothera-background-music.mp3")
+background_music = os.path.join(assets_dir, "soothera-spa-background-music.mp3")
 
 # Get latest script
 script_files = sorted(

@@ -1,6 +1,10 @@
 import os
 import praw
 import tweepy
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Load environment variables
 reddit_client_id = os.getenv("REDDIT_CLIENT_ID")

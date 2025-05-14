@@ -2,8 +2,8 @@ name: Auto Blog Post Generator
 
 on:
   schedule:
-    - cron: '0 8 * * *'  # Runs every day at 8 AM UTC
-  workflow_dispatch:     # Allows manual trigger
+    - cron: '0 8 * * *'  # Daily at 8 AM UTC
+  workflow_dispatch:     # Manual trigger
 
 jobs:
   generate-blog:
@@ -13,24 +13,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '18'
+          python-version: '3.11'  # Or the version you prefer
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || true  # Optional if you have a requirements.txt
 
       - name: Run Blog Generation Script
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: node generate-blog.js
+        run: python blog-post-generator.py
 
       - name: Commit and Push Changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Auto-generated blog post on $(date)"
+          git add blog/
+          git commit -m "Auto-generated blog post on $(date)" || echo "No changes to commit"
           git push
-        continue-on-error: true  # Prevents failure if no changes are made
+        continue-on-error: true

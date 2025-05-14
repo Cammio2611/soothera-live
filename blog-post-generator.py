@@ -45,4 +45,41 @@ def generate_blog_post(topic):
 
 # ✅ Generate YouTube Shorts script
 def generate_youtube_script(topic):
-    prompt = f"Write a catchy 60-second YouTube Shorts script
+    prompt = f"""
+    Write a catchy 60-second YouTube Shorts script on '{topic}',
+    including a hook, value delivery, and call to action to visit Soothera.com.
+    """
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"❌ Failed to generate YouTube script: {e}")
+        return None
+
+# ✅ Generate content
+blog_content = generate_blog_post(topic)
+youtube_script = generate_youtube_script(topic)
+
+# ✅ Generate filenames
+today = datetime.date.today().strftime("%Y-%m-%d")
+safe_topic = topic.replace(" ", "-").lower()
+blog_filename = os.path.join("blog", f"{safe_topic}-{today}.md")
+script_filename = os.path.join("scripts", f"{safe_topic}-{today}-shorts-script.txt")
+
+# ✅ Save Blog Post
+if blog_content:
+    with open(blog_filename, "w", encoding="utf-8") as file:
+        file.write(blog_content)
+    print(f"✅ Blog post saved as {blog_filename}")
+
+# ✅ Save YouTube Shorts Script
+if youtube_script:
+    with open(script_filename, "w", encoding="utf-8") as file:
+        file.write(youtube_script)
+    print(f"✅ YouTube Shorts script saved as {script_filename}")
+
+if not blog_content and not youtube_script:
+    print("⚠️ No content generated.")

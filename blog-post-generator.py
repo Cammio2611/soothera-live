@@ -3,7 +3,7 @@ import os
 
 # Load API Key from environment variable
 api_key = os.getenv("OPENAI_API_KEY")
-client = openai.OpenAI(api_key=api_key)
+client = openai.Client(api_key=api_key)
 
 def generate_blog_post(topic):
     try:

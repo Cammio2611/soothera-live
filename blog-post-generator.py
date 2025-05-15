@@ -1,9 +1,8 @@
-import openai
 import os
+from openai import OpenAI
 
-# Load API Key from environment variable
 api_key = os.getenv("OPENAI_API_KEY")
-client = openai.Client(api_key=api_key)
+client = OpenAI(api_key=api_key)
 
 def generate_blog_post(topic):
     try:
@@ -24,7 +23,7 @@ def generate_blog_post(topic):
 if __name__ == "__main__":
     topic = "Natural Migraine Remedies 2025"
     content = generate_blog_post(topic)
-    
+
     if content:
         print("✅ Blog Post Generated Successfully:\n")
         print(content)

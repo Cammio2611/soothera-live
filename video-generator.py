@@ -1,62 +1,37 @@
-import os
-import datetime
 import subprocess
+from datetime import datetime
+import os
 
-# Directories and assets
-scripts_dir = "scripts"
-videos_dir = "videos"
-assets_dir = "assets"
+# Create the output directory if it doesn't exist
+output_dir = "videos"
+os.makedirs(output_dir, exist_ok=True)
 
-os.makedirs(videos_dir, exist_ok=True)
+# Generate filename with today's date
+today_str = datetime.now().strftime("%Y-%m-%d")
+output_file = f"{output_dir}/shorts-{today_str}.mp4"
 
-background_image = os.path.join(assets_dir, "background.jpg")
-background_music = os.path.join(assets_dir, "soothera-spa-background-music.mp3")
+print(f"🎬 Generating video: {output_file}")
 
-# Get latest script
-script_files = sorted(
-    [f for f in os.listdir(scripts_dir) if f.endswith(".txt")],
-    reverse=True
-)
-
-if not script_files:
-    print("❌ No scripts found in 'scripts/' directory.")
-    exit(1)
-
-latest_script_path = os.path.join(scripts_dir, script_files[0])
-
-# Read script content
-with open(latest_script_path, "r", encoding="utf-8") as file:
-    script_content = file.read()
-
-# Generate overlay text file for ffmpeg
-overlay_text_file = "overlay.txt"
-with open(overlay_text_file, "w", encoding="utf-8") as file:
-    file.write(script_content)
-
-# Output video filename
-today = datetime.date.today().strftime("%Y-%m-%d")
-video_filename = os.path.join(videos_dir, f"shorts-{today}.mp4")
-
-# FFmpeg Command with background image and music
+# Example: Generate a 5-second black screen video
 cmd = [
     "ffmpeg",
-    "-loop", "1",
-    "-i", background_image,
-    "-i", background_music,
-    "-t", "60",
-    "-vf", f"drawtext=textfile={overlay_text_file}:fontcolor=white:fontsize=24:x=(w-text_w)/2:y=(h-text_h)/2",
-    "-c:v", "libx264",
-    "-c:a", "aac",
-    "-pix_fmt", "yuv420p",
-    "-shortest",
-    video_filename
+    "-y",  # Overwrite output if exists
+    "-f", "lavfi",
+    "-i", "color=c=black:s=1280x720:d=5",
+    output_file
 ]
 
-# Run FFmpeg
-print(f"🎬 Generating video: {video_filename}")
-result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+# Show ffmpeg version for debugging
+version_check = subprocess.run(["ffmpeg", "-version"], capture_output=True, text=True)
+print(version_check.stdout)
 
-if result.returncode == 0:
-    print(f"✅ Video generated successfully at {video_filename}")
+# Run the video generation command
+result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+if result.returncode != 0:
+    print("❌ Error generating video:")
+    print(result.stderr)
+    exit(result.returncode)
 else:
-    print(f"❌ Video generation failed:\n{result.stderr.decode()}")
+    print("✅ Video created successfully!")
+    print(f"📂 Saved as: {output_file}")

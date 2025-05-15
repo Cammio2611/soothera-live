@@ -1,37 +1,51 @@
-import subprocess
-from datetime import datetime
 import os
+import subprocess
+from openai import OpenAI
 
-# Create the output directory if it doesn't exist
-output_dir = "videos"
-os.makedirs(output_dir, exist_ok=True)
+api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=api_key)
 
-# Generate filename with today's date
-today_str = datetime.now().strftime("%Y-%m-%d")
-output_file = f"{output_dir}/shorts-{today_str}.mp4"
+def generate_youtube_script(topic):
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a professional video script writer."},
+                {"role": "user", "content": f"Write a short YouTube script about {topic}."}
+            ],
+            temperature=0.7,
+            max_tokens=500
+        )
+        return response.choices[0].message.content.strip()
+    except Exception as e:
+        print(f"❌ Error generating YouTube script: {e}")
+        return None
 
-print(f"🎬 Generating video: {output_file}")
+def generate_video(script_text, output_path):
+    try:
+        print(f"🎬 Generating video: {output_path}")
+        with open("script.txt", "w") as f:
+            f.write(script_text)
 
-# Example: Generate a 5-second black screen video
-cmd = [
-    "ffmpeg",
-    "-y",  # Overwrite output if exists
-    "-f", "lavfi",
-    "-i", "color=c=black:s=1280x720:d=5",
-    output_file
-]
+        cmd = ["ffmpeg", "-f", "lavfi", "-i", "color=c=black:s=1280x720:d=5",
+               "-vf", "drawtext=text='Soothera Shorts':fontsize=48:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2",
+               "-y", output_path]
+        
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.returncode == 0:
+            print("✅ Video generated successfully.")
+        else:
+            print(f"❌ ffmpeg error:\n{result.stderr.decode()}")
+    except Exception as e:
+        print(f"❌ Video generation failed: {e}")
 
-# Show ffmpeg version for debugging
-version_check = subprocess.run(["ffmpeg", "-version"], capture_output=True, text=True)
-print(version_check.stdout)
+if __name__ == "__main__":
+    topic = "Natural Migraine Remedies 2025"
+    script = generate_youtube_script(topic)
 
-# Run the video generation command
-result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-
-if result.returncode != 0:
-    print("❌ Error generating video:")
-    print(result.stderr)
-    exit(result.returncode)
-else:
-    print("✅ Video created successfully!")
-    print(f"📂 Saved as: {output_file}")
+    if script:
+        print("✅ YouTube Script Generated Successfully:\n")
+        print(script)
+        generate_video(script, f"videos/shorts-{topic.replace(' ', '-').lower()}.mp4")
+    else:
+        print("⚠️ No content generated.")

@@ -4,84 +4,81 @@
   <meta charset="UTF-8">
   <title>Soothera - Wellness & Comfort</title>
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
-    header { background: #006644; color: white; padding: 3em 1em; text-align: center; }
-    header h1 { margin: 0 0 0.5em 0; font-size: 2.5em; }
-    header p { margin: 0; font-size: 1.2em; }
-    nav { background: #004d33; display: flex; justify-content: center; padding: 1em 0; }
-    nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
-    .container { max-width: 1000px; margin: 2em auto; padding: 0 1em; }
-    h2 { margin-top: 2em; text-align: center; }
-    .products { display: flex; gap: 2em; flex-wrap: wrap; justify-content: center; margin-top: 1em; }
-    .product { border: 1px solid #ddd; padding: 1em; width: 300px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .product img { width: 100%; height: auto; border-radius: 4px; }
-    .subscribe-form { background: #f9f9f9; padding: 2em; border-radius: 8px; text-align: center; margin: 2em auto; max-width: 500px; }
-    input[type="email"] { width: 80%; padding: 0.5em; margin: 1em 0; border: 1px solid #ccc; border-radius: 4px; }
-    button { padding: 0.5em 1em; background: #006644; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    button:hover { background: #004d33; }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header { background: #006644; color: white; padding: 1rem; text-align: center; }
+    nav a { color: white; margin: 0 1rem; text-decoration: none; }
+    main { padding: 2rem; max-width: 900px; margin: auto; }
+    .products, .blog-posts { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .product { border: 1px solid #ccc; padding: 1rem; border-radius: 8px; flex: 1 1 45%; text-align: center; }
+    .btn-subscribe { display: inline-block; margin: 2rem 0; padding: 0.75rem 1.5rem; background: #006644; color: white; border: none; border-radius: 4px; cursor: pointer; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Soothera</h1>
-    <p>Natural Solutions for Migraine and Wellness Relief</p>
+    <nav>
+      <a href="#shop">Shop</a>
+      <a href="#subscribe">Subscribe</a>
+      <a href="#blog">Blog</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
 
-  <nav>
-    <a href="#shop">Shop</a>
-    <a href="#subscribe">Subscribe</a>
-    <a href="#blog">Blog</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <div class="container" id="shop">
-    <h2>Featured Products</h2>
-    <div class="products">
-      <div class="product">
-        <h3>ONLYCARE Migraine Ice Cap</h3>
-        <img src="https://via.placeholder.com/300x200?text=Migraine+Ice+Cap" alt="ONLYCARE Migraine Ice Cap">
-        <p><a href="https://www.amazon.co.uk/dp/B0B7JC171Q" target="_blank">View on Amazon</a></p>
+  <main>
+    <section id="shop">
+      <h2>Featured Products</h2>
+      <div class="products">
+        <div class="product">
+          <h3>ONLYCARE Migraine Ice Cap</h3>
+          <img src="https://via.placeholder.com/200x150?text=ONLYCARE+Migraine+Ice+Cap" alt="ONLYCARE Migraine Ice Cap">
+          <p><a href="https://www.amazon.co.uk/dp/B0B7JC171Q" target="_blank">View on Amazon</a></p>
+        </div>
+        <div class="product">
+          <h3>Halo Mask Migraine Relief</h3>
+          <img src="https://via.placeholder.com/200x150?text=Halo+Mask+Migraine+Relief" alt="Halo Mask Migraine Relief">
+          <p><a href="https://www.amazon.co.uk/dp/B09TQ6HQ89" target="_blank">View on Amazon</a></p>
+        </div>
       </div>
-      <div class="product">
-        <h3>Halo Mask Migraine Relief</h3>
-        <img src="https://via.placeholder.com/300x200?text=Halo+Mask" alt="Halo Mask Migraine Relief">
-        <p><a href="https://www.amazon.co.uk/dp/B09TQ6HQ89" target="_blank">View on Amazon</a></p>
-      </div>
-    </div>
+    </section>
 
-    <div class="subscribe-form" id="subscribe">
+    <section id="subscribe">
       <h2>Subscribe for More Wellness Tips</h2>
-      <script async data-uid="a224be5b2f" src="https://soothera-live.kit.com/a224be5b2f/index.js"></script>
-      <noscript>
-        <form action="https://app.kit.com/forms/8055530/subscriptions" method="POST" target="_blank">
-          <input type="email" name="email_address" placeholder="Your email address" required>
-          <button type="submit">Subscribe</button>
-        </form>
-      </noscript>
-    </div>
+      <button class="btn-subscribe" id="subscribeTrigger">Subscribe for more</button>
+    </section>
 
-    <h2 id="blog">Latest Blog Posts</h2>
-    <div id="blog-posts" style="text-align: center;">
-      <p>Loading blog posts...</p>
-    </div>
-  </div>
+    <section id="blog">
+      <h2>Latest Blog Posts</h2>
+      <div id="blogPosts">Loading blog posts...</div>
+    </section>
+  </main>
 
+  <!-- Kit Subscription Script -->
+  <script async data-uid="a224be5b2f" src="https://soothera-live.kit.com/a224be5b2f/index.js"></script>
   <script>
+    // Manual subscription button trigger
+    document.getElementById('subscribeTrigger').addEventListener('click', function() {
+      const form = document.querySelector('.formkit-form[data-uid="a224be5b2f"]');
+      if (form && form.dataset && form.dataset.svForm) {
+        window.FormKit.open(form.dataset.svForm);
+      }
+    });
+
+    // Load blog posts if available
     fetch('blog-index.json')
       .then(response => response.json())
-      .then(blogs => {
-        const container = document.getElementById('blog-posts');
-        if (!blogs.length) {
-          container.innerHTML = '<p>No blog posts available yet. Check back soon!</p>';
-        } else {
-          container.innerHTML = blogs.map(blog =>
-            `<h3>${blog.title}</h3><p>${blog.summary}</p><a href="${blog.link}">Read More</a><hr>`
+      .then(data => {
+        const container = document.getElementById('blogPosts');
+        if (data.posts && data.posts.length > 0) {
+          container.innerHTML = data.posts.map(post =>
+            `<div><a href="${post.url}" target="_blank">${post.title}</a></div>`
           ).join('');
+        } else {
+          container.textContent = 'No blog posts available yet. Check back soon!';
         }
       })
       .catch(() => {
-        document.getElementById('blog-posts').innerHTML = '<p>No blog posts available yet. Check back soon!</p>';
+        document.getElementById('blogPosts').textContent = 'No blog posts available yet. Check back soon!';
       });
   </script>
 

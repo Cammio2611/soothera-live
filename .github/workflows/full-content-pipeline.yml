@@ -1,13 +1,17 @@
-name: Full Content Automation Pipeline
+name: Soothera Full Content Pipeline
 
 on:
-  workflow_dispatch:  # Allows you to trigger manually from the Actions tab
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-  run-full-pipeline:
+  full-content:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -15,8 +19,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Python Dependencies
-        run: pip install -r requirements.txt
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Install ffmpeg
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
@@ -26,13 +32,22 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python blog-post-generator.py
 
-      - name: Generate Video
+      - name: Commit and Push New Blog Post
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add blog/*.md
+          git commit -m "📝 Auto-generated blog post [skip ci]" || echo "No changes to commit"
+          git push
+
+      - name: Generate Video Short
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python video-generator.py
 
-      - name: Post to Twitter and Reddit
+      - name: Post to Social Media
         env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
           TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
           TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
@@ -42,14 +57,3 @@ jobs:
           REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
           REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
         run: python social-poster.py
-
-      - name: Configure Git User
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Commit and Push New Blog Post
-        run: |
-          git add blog/*.md
-          git commit -m "📝 Auto-generated content [skip ci]" || echo "No changes to commit"
-          git push

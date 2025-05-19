@@ -1,67 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Soothera - Wellness & Comfort</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soothera | Natural Migraine & Wellness Solutions</title>
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #f9f9f9; color: #333; }
-    header { background: #006644; color: white; padding: 20px 0; text-align: center; }
-    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    section { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-    h2 { color: #006644; }
-    .product { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    button { background: #006644; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+    header {
+      background: #2e7d32;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      margin: 1rem auto;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    nav a {
+      color: #2e7d32;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    section {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #2e7d32;
+    }
+    .product {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 1rem 0;
+      padding: 1rem;
+      text-align: center;
+    }
+    .subscribe-btn {
+      display: inline-block;
+      margin: 1rem auto;
+      padding: 0.75rem 1.5rem;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .blog {
+      margin-top: 2rem;
+    }
   </style>
+  <script async data-uid="a224be5b2f" src="https://soothera-live.kit.com/a224be5b2f/index.js"></script>
 </head>
 <body>
-
   <header>
     <h1>Soothera</h1>
-    <nav>
-      <a href="#shop">Shop</a>
-      <a href="#subscribe">Subscribe</a>
-      <a href="#blog">Blog</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <p>Your Natural Solution for Headaches & Wellness</p>
   </header>
 
-  <section id="shop">
+  <nav>
+    <a onclick="scrollToSection('products')">Products</a>
+    <a onclick="scrollToSection('blogs')">Blog</a>
+    <button class="subscribe-btn" onclick="window.FormKit.open('a224be5b2f')">Subscribe for More</button>
+  </nav>
+
+  <section id="products">
     <h2>Featured Products</h2>
     <div class="product">
-      <h3>ONLYCARE Migraine Ice Cap</h3>
-      <a href="https://www.amazon.co.uk/dp/B0B7JC171Q" target="_blank">View on Amazon</a>
+      <h3><a href="https://www.amazon.co.uk/dp/B0B7JC171Q" target="_blank">ONLYCARE Migraine Ice Cap</a></h3>
     </div>
     <div class="product">
-      <h3>Halo Mask Migraine Relief</h3>
-      <a href="https://www.amazon.co.uk/dp/B09TQ6HQ89" target="_blank">View on Amazon</a>
+      <h3><a href="https://www.amazon.co.uk/dp/B09TQ6HQ89" target="_blank">Halo Mask Migraine Relief</a></h3>
     </div>
   </section>
 
-  <section id="subscribe">
-    <h2>Subscribe for More Wellness Tips</h2>
-    <button onclick="triggerKitPopup()">Subscribe for more</button>
+  <section>
+    <button class="subscribe-btn" onclick="window.FormKit.open('a224be5b2f')">Subscribe for More</button>
   </section>
 
-  <section id="blog">
+  <section id="blogs" class="blog">
     <h2>Latest Blog Posts</h2>
-    <div id="blog-posts">No blog posts available yet. Check back soon!</div>
+    <div id="blog-container">
+      <p>Loading latest posts...</p>
+    </div>
   </section>
 
-  <!-- Kit embed for auto-popup -->
-  <script async data-uid="a224be5b2f" src="https://soothera-live.kit.com/a224be5b2f/index.js"></script>
-
-  <!-- Manual trigger for Kit -->
   <script>
-    function triggerKitPopup() {
-      const kitForm = document.querySelector('.formkit-form');
-      if (kitForm) {
-        kitForm.style.display = 'block';
-      } else {
-        console.warn('Kit embed not loaded yet.');
-      }
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
-  </script>
 
+    fetch('./blog-index.json')
+      .then(res => res.json())
+      .then(data => {
+        const blogContainer = document.getElementById('blog-container');
+        blogContainer.innerHTML = '';
+        data.forEach(post => {
+          const div = document.createElement('div');
+          div.className = 'product';
+          div.innerHTML = `<h3><a href="${post.url}">${post.title}</a></h3>`;
+          blogContainer.appendChild(div);
+        });
+      })
+      .catch(() => {
+        document.getElementById('blog-container').innerHTML = '<p>No blog posts available yet.</p>';
+      });
+  </script>
 </body>
 </html>

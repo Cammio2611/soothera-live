@@ -3,27 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Soothera - Wellness & Comfort Solutions</title>
+  <title>Soothera | Wellness & Comfort Solutions</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      color: #333;
+    }
+    header {
+      background: #4CAF50;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+    .product {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      max-width: 300px;
+      text-align: center;
+      padding: 20px;
+    }
+    .product img {
+      width: 100%;
+      border-radius: 6px;
+    }
+    .product button {
+      background: #f6a6ab;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .newsletter {
+      background: #4CAF50;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .newsletter form input, .newsletter form button {
+      padding: 10px;
+      margin: 5px;
+      border: none;
+      border-radius: 3px;
+    }
+    .newsletter form input {
+      width: 200px;
+    }
+    .newsletter form button {
+      background: #f6a6ab;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Page Content -->
-  <main>
+  <header>
     <h1>Welcome to Soothera</h1>
-    <p>Your trusted source for wellness and comfort solutions.</p>
-  </main>
+    <p>Your trusted source for migraine relief and stress comfort solutions</p>
+  </header>
 
-  <!-- Kit JavaScript Modal Loader -->
+  <section class="products">
+    <div class="product">
+      <img src="https://via.placeholder.com/300x200" alt="Halo Mask Migraine Relief">
+      <h2>Halo Mask Migraine Relief</h2>
+      <p>Relax with the ultimate cooling migraine mask. Comfortable and reusable.</p>
+      <p>£19.99</p>
+      <button onclick="window.location.href='https://www.amazon.co.uk/dp/B09TQ6HQ89'">Learn More</button>
+    </div>
+    <div class="product">
+      <img src="https://via.placeholder.com/300x200" alt="ONLYCARE Migraine Ice Cap">
+      <h2>ONLYCARE Migraine Ice Cap</h2>
+      <p>Full-head coverage to provide instant relief from migraines and headaches.</p>
+      <p>£21.99</p>
+      <button onclick="window.location.href='https://www.amazon.co.uk/dp/B0B7JC171Q'">Learn More</button>
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <h2>Subscribe for More Wellness Tips</h2>
+    <form action="https://app.kit.com/forms/8055530/subscriptions" method="post" data-sv-form="8055530" data-uid="a224be5b2f" data-format="modal" data-version="5">
+      <input type="email" name="email_address" placeholder="Your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <p>We respect your privacy. Unsubscribe at any time.</p>
+  </section>
+
+  <!-- Kit Modal Loader -->
   <script async data-uid="a224be5b2f" src="https://soothera-live.kit.com/a224be5b2f/index.js"></script>
-
-  <!-- HTML Fallback Embed (Optional) -->
-  <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
-  <form action="https://app.kit.com/forms/8055530/subscriptions" class="seva-form formkit-form" method="post" data-sv-form="8055530" data-uid="a224be5b2f" data-format="modal" data-version="5" data-options='{"settings":{"after_subscribe":{"action":"message","success_message":"Success! Now check your email to confirm your subscription."}}}' style="max-width:400px;margin:20px auto;padding:20px;border:1px solid #ddd;border-radius:6px;">
-    <h2>Subscribe for more useful tips</h2>
-    <input type="email" name="email_address" placeholder="Your email" required style="width:100%;padding:10px;margin-bottom:10px;">
-    <button type="submit" style="width:100%;padding:10px;background:#f6a6ab;color:white;border:none;border-radius:3px;">Send me the guide</button>
-    <p style="font-size:12px;color:#555;">We respect your privacy. Unsubscribe at any time.</p>
-  </form>
 
 </body>
 </html>

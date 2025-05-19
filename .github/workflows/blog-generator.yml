@@ -16,23 +16,26 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'  # Or the version you prefer
+          python-version: '3.11'
 
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt || true  # Optional if you have a requirements.txt
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run Blog Generation Script
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python blog-post-generator.py
 
-      - name: Commit and Push Changes
+      - name: Configure Git User
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add blog/
-          git commit -m "Auto-generated blog post on $(date)" || echo "No changes to commit"
+
+      - name: Commit and Push New Blog Post
+        run: |
+          git add blog/*.md
+          git commit -m "📝 Auto-generated blog post [skip ci]" || echo "No changes to commit"
           git push
-        continue-on-error: true
+        continue-on-error: true  # Only on commit step

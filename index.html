@@ -15,7 +15,7 @@
     header {
       background-color: #4CAF81;
       color: white;
-      padding: 16px;
+      padding: 16px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -23,11 +23,11 @@
     }
     header h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 22px;
     }
     nav {
       display: flex;
-      gap: 16px;
+      gap: 20px;
     }
     nav button {
       background: none;
@@ -35,6 +35,7 @@
       color: white;
       font-weight: 600;
       cursor: pointer;
+      font-size: 16px;
     }
     .container {
       max-width: 900px;
@@ -103,35 +104,41 @@
   &copy; 2025 Soothera. Wellness & Comfort Delivered.
 </footer>
 
-<!-- KIT POPUP SCRIPT -->
+<!-- KIT MODAL -->
 <script async data-uid="a224be5b2f" src="https://soothera-live.kit.com/a224be5b2f/index.js"></script>
 
 <script>
-  // Trigger Kit modal manually
-  function openKitModal() {
-    if (window.formkit) {
-      window.formkit.open();
-    } else {
-      console.warn("Kit not yet loaded.");
-    }
+  function waitForKit(callback) {
+    const interval = setInterval(() => {
+      if (window.formkit) {
+        clearInterval(interval);
+        callback();
+      }
+    }, 200);
   }
 
-  document.getElementById('subscribeNav').addEventListener('click', openKitModal);
-  document.getElementById('subscribeMain').addEventListener('click', openKitModal);
+  function openKitPopup() {
+    waitForKit(() => {
+      window.formkit.open();
+    });
+  }
 
-  // Blog loader
+  document.getElementById('subscribeNav').addEventListener('click', openKitPopup);
+  document.getElementById('subscribeMain').addEventListener('click', openKitPopup);
+
+  // Load blogs
   fetch('blog-index.json')
-    .then(response => response.ok ? response.json() : [])
+    .then(res => res.ok ? res.json() : [])
     .then(posts => {
-      const section = document.getElementById('blog-section');
+      const container = document.getElementById('blog-section');
       if (!posts.length) {
-        section.textContent = "No blog posts available yet. Check back soon!";
+        container.textContent = "No blog posts available yet. Check back soon!";
         return;
       }
-      section.innerHTML = posts.map(p => `
+      container.innerHTML = posts.map(post => `
         <div style="margin-bottom: 16px;">
-          <strong>${p.title}</strong><br/>
-          <a href="${p.url}" target="_blank">Read More</a>
+          <strong>${post.title}</strong><br/>
+          <a href="${post.url}" target="_blank">Read More</a>
         </div>
       `).join('');
     })

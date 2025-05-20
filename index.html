@@ -3,140 +3,165 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Soothera | Natural Migraine & Wellness</title>
+  <title>Soothera – Wellness & Comfort</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #222;
-      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fefefe;
+      color: #333;
     }
     header {
-      background-color: #126b3f;
+      background: #52a178;
       color: white;
-      padding: 1rem;
-    }
-    nav {
+      padding: 1rem 2rem;
       display: flex;
-      justify-content: center;
-      gap: 2rem;
-      padding: 0.5rem;
-      background-color: #f9f9f9;
+      justify-content: space-between;
+      align-items: center;
     }
-    nav a {
-      text-decoration: none;
-      color: #126b3f;
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    nav button {
+      background: white;
+      color: #52a178;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 5px;
       font-weight: bold;
-    }
-    .hero {
-      padding: 1rem;
-      font-size: 1.2rem;
+      cursor: pointer;
     }
     .section {
-      padding: 2rem 1rem;
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
-    .product {
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      margin: 1rem auto;
+    .section h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .products, .blogs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
       padding: 1rem;
-      max-width: 500px;
       background: white;
     }
-    .product a {
-      text-decoration: none;
-      color: #126b3f;
-      font-weight: bold;
+    .card h3 {
+      margin-top: 0;
     }
-    button {
-      background-color: #126b3f;
+    .subscribe-button {
+      display: block;
+      margin: 2rem auto;
+      background: #52a178;
       color: white;
       border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 4px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
     }
-    button:hover {
-      background-color: #0e5634;
-    }
-    h2 {
-      color: #126b3f;
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #777;
     }
   </style>
 </head>
 <body>
+
+  <!-- Header -->
   <header>
     <h1>Soothera</h1>
-    <div class="hero">Your Natural Solution for Headaches & Wellness</div>
-    <button class="formkit-trigger">Subscribe for More</button>
+    <nav>
+      <button class="subscribe-button">Subscribe</button>
+    </nav>
   </header>
 
-  <nav>
-    <a href="#products">Products</a>
-    <a href="#blog">Blog</a>
-  </nav>
+  <!-- Hero Section -->
+  <div class="section">
+    <h2>Natural Relief for Headaches & Stress</h2>
+    <p style="text-align: center; max-width: 700px; margin: 0 auto;">
+      Discover the best in natural wellness – migraine caps, stress relief tools, and comforting solutions delivered to your door.
+    </p>
+    <button class="subscribe-button">Subscribe for More</button>
+  </div>
 
-  <section id="products" class="section">
+  <!-- Featured Products -->
+  <div class="section">
     <h2>Featured Products</h2>
-
-    <div class="product">
-      <a href="https://www.amazon.co.uk/dp/B0B7JC171Q" target="_blank">
-        ONLYCARE Migraine Ice Cap
-      </a>
+    <div class="products">
+      <div class="card">
+        <h3>ONLYCARE Migraine Ice Cap</h3>
+        <p>Targeted cold therapy for fast migraine relief.</p>
+        <a href="https://www.amazon.co.uk/dp/B0B7JC171Q" target="_blank">View Product</a>
+      </div>
+      <div class="card">
+        <h3>Halo Mask Migraine Relief</h3>
+        <p>Soothing compression and cooling mask combo.</p>
+        <a href="https://www.amazon.co.uk/dp/B09TQ6HQ89" target="_blank">View Product</a>
+      </div>
     </div>
+  </div>
 
-    <div class="product">
-      <a href="https://www.amazon.co.uk/dp/B09TQ6HQ89" target="_blank">
-        Halo Mask Migraine Relief
-      </a>
-    </div>
-  </section>
-
-  <section id="subscribe" class="section">
-    <button class="formkit-trigger">Subscribe for More</button>
-  </section>
-
-  <section id="blog" class="section">
+  <!-- Blog Section -->
+  <div class="section">
     <h2>Latest Blog Posts</h2>
-    <div id="blog-posts">No blog posts available yet.</div>
-  </section>
+    <div class="blogs" id="blog-container">
+      <!-- Blog posts will be inserted here -->
+    </div>
+  </div>
 
-  <!-- Kit Subscribe Script -->
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Soothera. Wellness & Comfort Delivered.
+  </footer>
+
+  <!-- ConvertKit Embed -->
   <script async data-uid="a224be5b2f" src="https://soothera-live.kit.com/a224be5b2f/index.js"></script>
 
-  <!-- Auto-open on page load -->
+  <!-- Manual Subscribe Button Support -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const event = new CustomEvent("formkit:show", {
-        detail: { uid: "a224be5b2f" }
+    document.querySelectorAll('.subscribe-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const modalTrigger = document.querySelector('[data-sv-form]');
+        if (modalTrigger) {
+          modalTrigger.click();
+        } else {
+          console.warn("ConvertKit modal not yet available.");
+        }
       });
-      document.dispatchEvent(event);
     });
   </script>
 
-  <!-- Blog Loader -->
+  <!-- Blog Post Loader -->
   <script>
-    fetch("blog-index.json")
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById("blog-posts");
-        container.innerHTML = "";
-        if (data.length === 0) {
-          container.innerText = "No blog posts available yet. Check back soon!";
-          return;
+    fetch('./blog-index.json')
+      .then(res => res.json())
+      .then(posts => {
+        const container = document.getElementById('blog-container');
+        if (posts.length === 0) {
+          container.innerHTML = '<p style="text-align: center;">No blog posts available.</p>';
+        } else {
+          container.innerHTML = posts.map(post => `
+            <div class="card">
+              <h3>${post.title}</h3>
+              <p>${post.summary}</p>
+              <a href="${post.url}" target="_blank">Read More</a>
+            </div>
+          `).join('');
         }
-        data.forEach(post => {
-          const div = document.createElement("div");
-          div.className = "product";
-          div.innerHTML = `<a href="${post.url}">${post.title}</a>`;
-          container.appendChild(div);
-        });
       })
       .catch(() => {
-        document.getElementById("blog-posts").innerText = "Failed to load blog posts.";
+        document.getElementById('blog-container').innerHTML = '<p style="text-align: center;">Failed to load blog posts.</p>';
       });
   </script>
+
 </body>
 </html>

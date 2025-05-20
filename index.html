@@ -1,100 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Soothera | Natural Migraine & Wellness Solutions</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Soothera | Natural Migraine & Wellness</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      background: #f9f9f9;
-      color: #333;
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #222;
+      text-align: center;
     }
     header {
-      background: #0f6937;
+      background-color: #126b3f;
       color: white;
-      padding: 10px 20px;
-      position: sticky;
-      top: 0;
+      padding: 1rem;
+    }
+    nav {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0.5rem;
+      background-color: #f9f9f9;
     }
     nav a {
-      color: white;
-      margin-left: 15px;
       text-decoration: none;
+      color: #126b3f;
       font-weight: bold;
     }
+    .hero {
+      padding: 1rem;
+      font-size: 1.2rem;
+    }
     .section {
-      text-align: center;
-      padding: 40px 20px;
+      padding: 2rem 1rem;
     }
     .product {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      margin: 10px auto;
-      padding: 15px;
-      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin: 1rem auto;
+      padding: 1rem;
+      max-width: 500px;
       background: white;
     }
+    .product a {
+      text-decoration: none;
+      color: #126b3f;
+      font-weight: bold;
+    }
     button {
-      background: #0f6937;
+      background-color: #126b3f;
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 4px;
       cursor: pointer;
-      margin: 10px;
+      font-weight: bold;
     }
     button:hover {
-      background: #095028;
+      background-color: #0e5634;
+    }
+    h2 {
+      color: #126b3f;
     }
   </style>
 </head>
 <body>
   <header>
-    <div><strong>Soothera</strong></div>
-    <nav>
-      <a href="#products">Products</a>
-      <a href="#blog">Blog</a>
-      <a href="#" id="subscribeNavButton">Subscribe</a>
-    </nav>
+    <h1>Soothera</h1>
+    <div class="hero">Your Natural Solution for Headaches & Wellness</div>
+    <button class="formkit-trigger">Subscribe for More</button>
   </header>
 
-  <div class="section" id="products">
+  <nav>
+    <a href="#products">Products</a>
+    <a href="#blog">Blog</a>
+  </nav>
+
+  <section id="products" class="section">
     <h2>Featured Products</h2>
-    <div class="product">
-      <a href="https://www.amazon.co.uk/dp/B0B7JC171Q" target="_blank"><strong>ONLYCARE Migraine Ice Cap</strong></a>
-    </div>
-    <div class="product">
-      <a href="https://www.amazon.co.uk/dp/B09TQ6HQ89" target="_blank"><strong>Halo Mask Migraine Relief</strong></a>
-    </div>
-  </div>
 
-  <div class="section">
-    <h2>Subscribe for More Wellness Tips</h2>
-    <button id="subscribeButton">Subscribe for More</button>
-  </div>
+    <div class="product">
+      <a href="https://www.amazon.co.uk/dp/B0B7JC171Q" target="_blank">
+        ONLYCARE Migraine Ice Cap
+      </a>
+    </div>
 
-  <div class="section" id="blog">
+    <div class="product">
+      <a href="https://www.amazon.co.uk/dp/B09TQ6HQ89" target="_blank">
+        Halo Mask Migraine Relief
+      </a>
+    </div>
+  </section>
+
+  <section id="subscribe" class="section">
+    <button class="formkit-trigger">Subscribe for More</button>
+  </section>
+
+  <section id="blog" class="section">
     <h2>Latest Blog Posts</h2>
-    <div id="blogPosts">
-      <p>No blog posts available yet.</p>
-    </div>
-  </div>
+    <div id="blog-posts">No blog posts available yet.</div>
+  </section>
 
-  <!-- Kit Subscription Script -->
+  <!-- Kit Subscribe Script -->
   <script async data-uid="a224be5b2f" src="https://soothera-live.kit.com/a224be5b2f/index.js"></script>
+
+  <!-- Auto-open on page load -->
   <script>
-    // Trigger the subscription popup when button is clicked
-    function triggerKitPopup() {
-      const event = new CustomEvent("kit:open", { detail: { uid: "a224be5b2f" } });
-      window.dispatchEvent(event);
-    }
-    document.getElementById('subscribeButton').addEventListener('click', triggerKitPopup);
-    document.getElementById('subscribeNavButton').addEventListener('click', triggerKitPopup);
+    document.addEventListener("DOMContentLoaded", function () {
+      const event = new CustomEvent("formkit:show", {
+        detail: { uid: "a224be5b2f" }
+      });
+      document.dispatchEvent(event);
+    });
+  </script>
+
+  <!-- Blog Loader -->
+  <script>
+    fetch("blog-index.json")
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById("blog-posts");
+        container.innerHTML = "";
+        if (data.length === 0) {
+          container.innerText = "No blog posts available yet. Check back soon!";
+          return;
+        }
+        data.forEach(post => {
+          const div = document.createElement("div");
+          div.className = "product";
+          div.innerHTML = `<a href="${post.url}">${post.title}</a>`;
+          container.appendChild(div);
+        });
+      })
+      .catch(() => {
+        document.getElementById("blog-posts").innerText = "Failed to load blog posts.";
+      });
   </script>
 </body>
 </html>

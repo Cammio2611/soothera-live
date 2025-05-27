@@ -1,51 +1,41 @@
 import os
-import subprocess
-from openai import OpenAI
+import openai
+import glob
 
-api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=api_key)
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def generate_youtube_script(topic):
-    try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a professional video script writer."},
-                {"role": "user", "content": f"Write a short YouTube script about {topic}."}
-            ],
-            temperature=0.7,
-            max_tokens=500
-        )
-        return response.choices[0].message.content.strip()
-    except Exception as e:
-        print(f"❌ Error generating YouTube script: {e}")
-        return None
+BLOG_DIR = "blog"
+SHORTS_DIR = "shorts"
+os.makedirs(SHORTS_DIR, exist_ok=True)
 
-def generate_video(script_text, output_path):
-    try:
-        print(f"🎬 Generating video: {output_path}")
-        with open("script.txt", "w") as f:
-            f.write(script_text)
+def get_latest_blog_post():
+    files = sorted(glob.glob(f"{BLOG_DIR}/*.md"), reverse=True)
+    if not files:
+        raise FileNotFoundError("❌ No blog posts found.")
+    filepath = files[0]
+    with open(filepath, "r", encoding="utf-8") as f:
+        content = f.read()
+    slug = os.path.basename(filepath).replace(".md", "")
+    return content, slug
 
-        cmd = ["ffmpeg", "-f", "lavfi", "-i", "color=c=black:s=1280x720:d=5",
-               "-vf", "drawtext=text='Soothera Shorts':fontsize=48:fontcolor=white:x=(w-text_w)/2:y=(h-text_h)/2",
-               "-y", output_path]
-        
-        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if result.returncode == 0:
-            print("✅ Video generated successfully.")
-        else:
-            print(f"❌ ffmpeg error:\n{result.stderr.decode()}")
-    except Exception as e:
-        print(f"❌ Video generation failed: {e}")
+def generate_youtube_script(blog_content):
+    messages = [
+        {"role": "system", "content": "You are a scriptwriter for YouTube Shorts."},
+        {"role": "user", "content": f"Turn this blog post into a 60-second YouTube Shorts script with visual scene suggestions:\n\n{blog_content}"}
+    ]
+    response = openai.ChatCompletion.create(
+        model="gpt-4o",
+        messages=messages,
+        temperature=0.7
+    )
+    return response.choices[0].message.content.strip()
 
 if __name__ == "__main__":
-    topic = "Natural Migraine Remedies 2025"
-    script = generate_youtube_script(topic)
+    blog_text, slug = get_latest_blog_post()
+    script = generate_youtube_script(blog_text)
 
-    if script:
-        print("✅ YouTube Script Generated Successfully:\n")
-        print(script)
-        generate_video(script, f"videos/shorts-{topic.replace(' ', '-').lower()}.mp4")
-    else:
-        print("⚠️ No content generated.")
+    output_path = os.path.join(SHORTS_DIR, f"{slug}-short.md")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(script)
+
+    print(f"✅ YouTube Shorts script generated: {output_path}")

@@ -19,15 +19,19 @@ def post_to_reddit(title, body):
             username=reddit_username,
             password=reddit_password
         )
-        subreddit = reddit.subreddit("test")  # 🔁 Change this to your actual target subreddit
+        subreddit = reddit.subreddit("test")  # ✅ Change to your real target after testing
         subreddit.submit(title, selftext=body)
         print("✅ Reddit post submitted.")
     except Exception as e:
         print(f"❌ Failed to post to Reddit: {e}")
 
 if __name__ == "__main__":
-    # Replace with dynamic values later if needed
-    reddit_title = "Discover the Latest in Natural Migraine Relief (2025 Edition)"
-    reddit_body = "We've published a new article on natural migraine remedies for 2025. Check it out on our website!"
+    reddit_title = "Natural Migraine Relief in 2025 — What’s Actually Working for You?"
+    reddit_body = (
+        "Hey folks, I've been exploring natural ways to manage migraines — especially as more 2025 research is coming out.\n\n"
+        "Things like peppermint oil, magnesium, and cold therapy caps keep popping up in blogs and wellness circles.\n\n"
+        "I'm curious — has anyone here found success with these remedies? What’s worked (or hasn’t) for you?\n\n"
+        "*Just sharing to learn from others — not promoting anything.*"
+    )
 
     post_to_reddit(reddit_title, reddit_body)

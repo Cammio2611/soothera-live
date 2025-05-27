@@ -1,4 +1,4 @@
-openai
+openai>=1.0.0
 tweepy==4.14.0
 praw==7.7.1
 python-dotenv

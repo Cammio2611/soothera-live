@@ -32,27 +32,27 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python blog-post-generator.py
 
-      - name: 🚀 Commit and Push New Blog Post
-        run: |
-          git add blog/*.md || echo "⚠️ No blog files to add"
-          git commit -m "📝 Auto-generated blog post [skip ci]" || echo "⚠️ No changes to commit"
-          git push || echo "⚠️ Nothing to push"
-        continue-on-error: true
+      - name: 🗂️ Update Blog Index
+        run: python update-blog-index.py
 
-      - name: 🎬 Generate Video Short
+      - name: 🎬 Generate YouTube Shorts Script
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python video-generator.py
 
-      - name: 📢 Post to Social Media
+      - name: 📢 Post to Reddit Only
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
-          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
-          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
           REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
         run: python social-poster.py
+
+      - name: 🚀 Commit and Push New Content
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add blog/*.md blog-index.json shorts/*.md || echo "⚠️ Nothing to add"
+          git commit -m "🔄 Auto-generated content update [skip ci]" || echo "⚠️ Nothing to commit"
+          git push || echo "⚠️ Nothing to push"
+        continue-on-error: true

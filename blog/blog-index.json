@@ -1,14 +1,39 @@
-[
-  {
-    "title": "The Ultimate Migraine Ice Cap Buyer's Guide 2025",
-    "slug": "migraine-ice-cap-buyers-guide-2025",
-    "summary": "Everything you need to know before buying a migraine ice cap in 2025.",
-    "date": "2025-05-19"
-  },
-  {
-    "title": "How to Use Peppermint Oil for Headache Relief",
-    "slug": "peppermint-oil-for-headache-relief",
-    "summary": "Natural tips on how peppermint oil can ease your headaches.",
-    "date": "2025-05-19"
-  }
-]
+import json
+import os
+from datetime import datetime
+
+BLOG_DIR = "blog"
+INDEX_FILE = "blog-index.json"
+
+def get_latest_blog():
+    files = sorted([f for f in os.listdir(BLOG_DIR) if f.endswith(".md")], reverse=True)
+    if not files:
+        return None
+    filename = files[0]
+    slug = filename.replace(".md", "")
+    path = os.path.join(BLOG_DIR, filename)
+    with open(path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    title = lines[0].replace("#", "").strip() if lines else slug
+    return {
+        "slug": slug,
+        "title": title,
+        "description": f"New post about {slug.replace('-', ' ')}.",
+        "date": datetime.now().strftime("%Y-%m-%d")
+    }
+
+def update_blog_index():
+    post = get_latest_blog()
+    if not post:
+        print("❌ No blog post found.")
+        return
+
+    # Load or initialize index
+    if os.path.exists(INDEX_FILE):
+        with open(INDEX_FILE, "r", encoding="utf-8") as f:
+            index = json.load(f)
+    else:
+        index = []
+
+    # Avoid duplicates
+    if

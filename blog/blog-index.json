@@ -36,4 +36,15 @@ def update_blog_index():
         index = []
 
     # Avoid duplicates
-    if
+    if any(item["slug"] == post["slug"] for item in index):
+        print("ℹ️ Blog post already in index.")
+        return
+
+    index.insert(0, post)  # newest first
+    with open(INDEX_FILE, "w", encoding="utf-8") as f:
+        json.dump(index, f, indent=2)
+
+    print(f"✅ blog-index.json updated with: {post['slug']}")
+
+if __name__ == "__main__":
+    update_blog_index()

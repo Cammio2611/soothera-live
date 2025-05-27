@@ -1,8 +1,8 @@
 import os
-import openai
 import glob
+from openai import OpenAI
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 BLOG_DIR = "blog"
 SHORTS_DIR = "shorts"
@@ -19,13 +19,12 @@ def get_latest_blog_post():
     return content, slug
 
 def generate_youtube_script(blog_content):
-    messages = [
-        {"role": "system", "content": "You are a scriptwriter for YouTube Shorts."},
-        {"role": "user", "content": f"Turn this blog post into a 60-second YouTube Shorts script with visual scene suggestions:\n\n{blog_content}"}
-    ]
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4o",
-        messages=messages,
+        messages=[
+            {"role": "system", "content": "You are a scriptwriter for YouTube Shorts."},
+            {"role": "user", "content": f"Turn this blog post into a creative, 60-second YouTube Shorts script with scene suggestions:\n\n{blog_content}"}
+        ],
         temperature=0.7
     )
     return response.choices[0].message.content.strip()
